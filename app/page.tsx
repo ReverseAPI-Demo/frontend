@@ -111,7 +111,9 @@ export default function HomePage() {
                                                 className="mt-4"
                                             >
                                                 <ResultCard
-                                                    curlCommand={result}
+                                                    curlCommand={
+                                                        result.curlCommand
+                                                    }
                                                 />
                                             </TabsContent>
                                             <TabsContent

@@ -20,6 +20,9 @@ export async function executeApiRequest(
 
         const startTime = performance.now();
 
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 30000);
+
         const requestPayload = {
             url: parsedCommand.url,
             method: parsedCommand.method,
@@ -34,6 +37,8 @@ export async function executeApiRequest(
             },
             body: JSON.stringify(requestPayload),
         });
+
+        clearTimeout(timeoutId);
 
         const endTime = performance.now();
         const timeMs = Math.round(endTime - startTime);

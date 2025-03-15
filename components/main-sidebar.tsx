@@ -20,7 +20,7 @@ const data = {
             items: [
                 {
                     title: "API Analyzer",
-                    url: "/analyzer",
+                    url: "/",
                     icon: "FileSearch",
                     description: "Extract and analyze API requests",
                     isActive: true,
@@ -49,7 +49,7 @@ const data = {
             items: [
                 {
                     title: "Documentation",
-                    url: "/docs",
+                    url: "/documentation",
                     icon: "BookOpen",
                     description: "Usage guides and help",
                 },

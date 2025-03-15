@@ -1,5 +1,4 @@
-// hooks/use-har-analyzer.ts
-
+import historyService from "@/services/history";
 import { useState, useEffect } from "react";
 import apiService from "@/services/api";
 import { toast } from "sonner";
@@ -57,10 +56,16 @@ export function useHarAnalyzer() {
         try {
             const response = await apiService.processHarFile(file, description);
 
-            console.log(response);
             if (response) {
                 setResult({
                     curlCommand: response,
+                });
+
+                historyService.addEntry({
+                    fileName: file.name,
+                    description: description,
+                    curlCommand: response,
+                    tags: extractTagsFromCommand(response),
                 });
 
                 toast.success("Analysis Complete", {
@@ -95,5 +100,32 @@ export function useHarAnalyzer() {
         result,
     };
 }
+
+const extractTagsFromCommand = (curlCommand: any): string[] => {
+    const tags: string[] = [];
+
+    const methodMatch = curlCommand.match(/-X\s+(\w+)/i);
+    if (methodMatch) {
+        tags.push(methodMatch[1]);
+    } else if (curlCommand.includes("-d") || curlCommand.includes("--data")) {
+        tags.push("POST");
+    } else {
+        tags.push("GET");
+    }
+
+    if (curlCommand.toLowerCase().includes("authorization")) {
+        tags.push("Auth");
+    }
+
+    if (curlCommand.toLowerCase().includes("weather")) {
+        tags.push("Weather");
+    } else if (curlCommand.toLowerCase().includes("recipe")) {
+        tags.push("Recipe");
+    } else if (curlCommand.toLowerCase().includes("flight")) {
+        tags.push("Flight");
+    }
+
+    return tags;
+};
 
 export default useHarAnalyzer;

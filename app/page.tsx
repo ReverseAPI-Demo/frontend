@@ -15,16 +15,24 @@ import {
     SidebarTrigger,
 } from "@/components/ui/sidebar";
 import { Skeleton } from "@/components/ui/skeleton";
+import { FormCard } from "@/components/form-card";
 
 export default function HomePage() {
     const [isLoading, setIsLoading] = useState(true);
     useEffect(() => {
         const timer = setTimeout(() => {
             setIsLoading(false);
-        }, 2000);
+        }, 1000);
 
         return () => clearTimeout(timer);
     }, []);
+
+    const processHAR = async (file: File, description: string) => {
+        console.log("File:", file);
+        console.log("Description:", description);
+
+        await new Promise((resolve) => setTimeout(resolve, 2000));
+    };
 
     return (
         <SidebarProvider>
@@ -41,10 +49,10 @@ export default function HomePage() {
                                     API Analyzer
                                 </BreadcrumbLink>
                             </BreadcrumbItem>
-                            <BreadcrumbSeparator />
                         </BreadcrumbList>
                     </Breadcrumb>
                 </header>
+
                 {isLoading ? (
                     <div className="flex flex-1 flex-col gap-4 p-4">
                         <div className="grid auto-rows-min gap-4 md:grid-cols-3">
@@ -55,7 +63,12 @@ export default function HomePage() {
                         <Skeleton className="min-h-[100vh] flex-1 rounded-xl bg-muted/50 md:min-h-min" />
                     </div>
                 ) : (
-                    <div></div>
+                    <div>
+                        <FormCard
+                            processHAR={processHAR}
+                            isProcessing={false}
+                        />
+                    </div>
                 )}
             </SidebarInset>
         </SidebarProvider>

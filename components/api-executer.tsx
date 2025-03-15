@@ -38,7 +38,7 @@ import {
 import { toast } from "sonner";
 
 interface ApiExecutorProps {
-    curlCommand: string;
+    curlCommand: any;
 }
 
 export function ApiExecutor({ curlCommand }: ApiExecutorProps) {

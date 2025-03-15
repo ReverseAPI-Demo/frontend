@@ -10,7 +10,7 @@ export interface ApiExecutionResult {
     success: boolean;
 }
 
-const API_BASE_URL = "http://54.158.15.139:8000/api";
+const API_BASE_URL = "/api";
 
 export async function executeApiRequest(
     curlCommand: string

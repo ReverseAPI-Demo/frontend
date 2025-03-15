@@ -286,7 +286,7 @@ export function ResultCard({ curlCommand }: ResultCardProps) {
 
 export function EmptyResultCard() {
     return (
-        <Card className="h-full flex flex-col">
+        <Card className="h-max flex flex-col">
             <CardHeader>
                 <CardTitle>API Request Details</CardTitle>
             </CardHeader>

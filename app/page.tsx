@@ -20,12 +20,15 @@ import { FormCard } from "@/components/form-card";
 import useHarAnalyzer from "@/hooks/useHarAnalyzer";
 import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
 import { AlertCircle } from "lucide-react";
-import { ResultCard, EmptyResultCard } from "@/components/result-card"; // Import the new components
+import { ResultCard, EmptyResultCard } from "@/components/result-card";
+import { ApiExecutor } from "@/components/api-executer";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 export default function HomePage() {
     const [isLoading, setIsLoading] = useState(true);
     const { analyzeHarFile, isProcessing, isApiConnected, result } =
         useHarAnalyzer();
+    const [activeTab, setActiveTab] = useState("details");
 
     useEffect(() => {
         const timer = setTimeout(() => {
@@ -88,9 +91,42 @@ export default function HomePage() {
 
                             <div>
                                 {result ? (
-                                    <ResultCard
-                                        curlCommand={result.curlCommand}
-                                    />
+                                    <div className="space-y-4">
+                                        <Tabs
+                                            value={activeTab}
+                                            onValueChange={setActiveTab}
+                                            className="w-full"
+                                        >
+                                            <TabsList className="grid w-full grid-cols-2">
+                                                <TabsTrigger value="details">
+                                                    API Details
+                                                </TabsTrigger>
+                                                <TabsTrigger value="test">
+                                                    Test Request
+                                                </TabsTrigger>
+                                            </TabsList>
+                                            <TabsContent
+                                                value="details"
+                                                className="mt-4"
+                                            >
+                                                <ResultCard
+                                                    curlCommand={
+                                                        result.curlCommand
+                                                    }
+                                                />
+                                            </TabsContent>
+                                            <TabsContent
+                                                value="test"
+                                                className="mt-4"
+                                            >
+                                                <ApiExecutor
+                                                    curlCommand={
+                                                        result.curlCommand
+                                                    }
+                                                />
+                                            </TabsContent>
+                                        </Tabs>
+                                    </div>
                                 ) : (
                                     <EmptyResultCard />
                                 )}

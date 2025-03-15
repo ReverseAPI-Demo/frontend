@@ -37,7 +37,7 @@ import {
 } from "@/components/ui/sheet";
 
 interface FormCardProps {
-    processHAR: (file: File, description: string) => Promise<void>;
+    processHAR: (file: File | null, description: string) => Promise<void>;
     isProcessing?: boolean;
 }
 
@@ -266,7 +266,7 @@ export function FormCard({ processHAR, isProcessing = false }: FormCardProps) {
                     type="submit"
                     className="flex-1"
                     disabled={isProcessing}
-                    onClick={processHAR}
+                    onClick={() => processHAR(file, description)}
                 >
                     {isProcessing ? (
                         <>
@@ -282,7 +282,7 @@ export function FormCard({ processHAR, isProcessing = false }: FormCardProps) {
     );
 
     return (
-        <Card className="w-full overflow-hidden border-0 rounded-none">
+        <Card className="w-full overflow-hidden shadow-xl">
             <CardHeader>
                 <div className="flex items-center justify-between">
                     <div>

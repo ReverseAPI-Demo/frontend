@@ -14,13 +14,13 @@ export async function POST(request) {
 }
 
 async function proxyRequest(request, path) {
-    console.log(`Proxying request to: http://54.158.15.139:8000/api/${path}`);
+    console.log(`Proxying request to: http://164.92.92.209:8000/api/${path}`);
 
     try {
         const body =
             request.method !== "GET" ? await request.json() : undefined;
 
-        const response = await fetch(`http://54.158.15.139:8000/api/${path}`, {
+        const response = await fetch(`http://164.92.92.209:8000/api/${path}`, {
             method: request.method,
             headers: {
                 "Content-Type": "application/json",

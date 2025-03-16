@@ -27,7 +27,7 @@ export class ApiError extends Error {
     }
 }
 
-const API_BASE_URL = "/api";
+const API_BASE_URL = "http://0.0.0.0:8000/api";
 
 async function handleResponse<T>(response: Response): Promise<T> {
     if (!response.ok) {
